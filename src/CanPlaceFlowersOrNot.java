@@ -38,22 +38,53 @@ public class CanPlaceFlowersOrNot {
 
     }
 
-public static boolean canPlaceFlowers(int[] flowerbed, int n) {
-    boolean placeable = true;
-    int i = 0;
 
-        while (i < flowerbed.length) {//traverses array from end to start
-            if ((i == 0 || flowerbed[i - 1] == 0) && flowerbed[i] == 0 && (i == flowerbed.length - 1 || flowerbed[i + 1] == 0)) {
-                flowerbed[i] = 1;
-                placeable = true;
-                n--;
-                i += 2; // Skip the next position as it's occupied by the newly planted flower
+    public static boolean canPlaceFlowers(int[] arr, int x) {
+        int n=arr.length;
+        int count=0;
+        if(n==0){
+            return false;
+        }
+        else if(n==1){
+            if(arr[0]==0&&x<=1){
+                return true;
             }
+            else if(arr[0]==1&&x==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            for(int i=0;i<n;i++){
+                if(i==0){
+                    if(arr[i]==0&&arr[i+1]==0){
+                        arr[i]=1;
+                        count++;
+                    }
+                }
+                else if(i>0&&i<n-1){
+                    if(arr[i]==0&&arr[i-1]==0&&arr[i+1]==0){
+                        arr[i]=1;
+                        count++;
+                    }
+                }
+                else{
+                    if(arr[i]==0&&arr[i-1]==0){
+                        arr[i]=1;
+                        count++;
+                    }
+                }
 
-            i++;
+            }
         }
 
-        return n <= 0 && placeable;
+        if(count>=x)
+            return true;
+
+        return false;
+
     }
 
 }
