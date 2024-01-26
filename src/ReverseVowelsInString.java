@@ -1,3 +1,5 @@
+import java.util.HashSet;
+import java.util.Set;
 public class ReverseVowelsInString {
 //    PROBLEM STATEMENT :
 //    Given a string s, reverse only all the vowels in the string and return it.
@@ -24,27 +26,39 @@ public class ReverseVowelsInString {
 //create a stack and store only vowels in the stack and push them out
         System.out.println(reverseVowels("hello there this seems to be working pretty well"));
     }
-    public static String reverseVowels(String s) {
-        String reversed= "";
-        int j=0;
-        char[] arr= new char[s.length()];
-        for(int i=0;i<s.length();i++){
-            if(s.charAt(i)=='a' || s.charAt(i)=='e' || s.charAt(i)=='i' || s.charAt(i)=='o' || s.charAt(i)=='u' || s.charAt(i)=='A' || s.charAt(i)=='E' || s.charAt(i)=='I' || s.charAt(i)=='O' || s.charAt(i)=='U'){
-                arr[j]=s.charAt(i);//if vowel found, pushes it to stack
-                j++;//points to next position in array
+
+        public static String reverseVowels(String s) {
+            StringBuilder reversed = new StringBuilder();//create string builder object to add elements faster than concat
+            int j = 0;
+            char[] arr = new char[s.length()];//initialize a character array of length same as string to act as stack
+            Set<Character> vowels = new HashSet<>();//create a character hashset for faster comparison than if
+            vowels.add('a');//add vowels to hashset
+            vowels.add('e');
+            vowels.add('i');
+            vowels.add('o');
+            vowels.add('u');
+            vowels.add('A');
+            vowels.add('E');
+            vowels.add('I');
+            vowels.add('O');
+            vowels.add('U');
+
+            for (int i = 0; i < s.length(); i++) {
+                if (vowels.contains(s.charAt(i))) {//if current character is in the hashset vowels, add it to stack
+                    arr[j] = s.charAt(i);
+                    j++;
+                }
             }
 
-        }
-        for(int k=0;k<s.length();k++){
-            if(s.charAt(k)=='a' || s.charAt(k)=='e' || s.charAt(k)=='i' || s.charAt(k)=='o' || s.charAt(k)=='u' || s.charAt(k)=='A' || s.charAt(k)=='E' || s.charAt(k)=='I' || s.charAt(k)=='O' || s.charAt(k)=='U'){
-                reversed+=arr[j-1];//if vowel, pushes vowel from stack into reversed
-                j--;//decrements counter
+            for (int k = 0; k < s.length(); k++) {
+                if (vowels.contains(s.charAt(k))) {//if current character is vowel, add vowel from stack
+                    reversed.append(arr[j - 1]);
+                    j--;
+                } else {
+                    reversed.append(s.charAt(k));//if not vowel, add character from original string
+                }
             }
-            else{
-                reversed+=s.charAt(k);//if not vowel, add from original string
-            }
+            return reversed.toString();//return stringbuilder as string
 
-        }
-        return reversed;
     }
 }
